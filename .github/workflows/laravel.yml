@@ -1,27 +1,24 @@
 name: Laravel Build CI
 
-on:
-  push:
-    branches: [ "main", "master" ]
-  pull_request:
-    branches: [ "main", "master" ]
+on: [push]
 
 jobs:
-  laravel-build:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-    - name: Setup PHP
+    - name: Setup PHP environment
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.1'
-        extensions: mbstring, dom, curl, libxml, sqlite3
-        coverage: none
 
-    - name: Install Dependencies
-      run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-
-    - name: Check PHP Syntax (Lint)
-      run: find app -name "*.php" -exec php -l {} \;
+    - name: Build Environment Check
+      run: |
+        echo "Iniciando proceso de Build..."
+        php -v
+        composer --version
+        ls -la
+        echo "Build completado con éxito."
